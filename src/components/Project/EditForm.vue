@@ -70,7 +70,10 @@ export interface IProjectForm {
   type: number;
 }
 
-const valueType = [{ label: "基础类型", value: 1 }];
+const valueType = [
+  { label: "基础类型", value: 1 },
+  { label: "测试项目", value: 2 },
+];
 
 const props = defineProps({
   visible: Boolean,
