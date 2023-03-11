@@ -11,7 +11,7 @@
           :collapse="isCollapse"
         >
           <el-menu-item
-            @click="(e) => handleMenuClick('/project')"
+            @click="() => handleMenuClick('/project')"
             index="project"
           >
             <el-icon><icon-menu /></el-icon>
