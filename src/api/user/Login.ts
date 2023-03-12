@@ -1,12 +1,11 @@
 import instance from "../http";
 
-export namespace CreateProject {
-  export const url = "/add-project";
+export namespace Login {
+  export const url = "/login";
 
   export type Body = {
-    user_id: number;
-    project_name: string;
-    project_type: number;
+    user_name: string;
+    password: string;
   };
 
   export type Response200 = {
