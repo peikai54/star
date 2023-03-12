@@ -30,12 +30,15 @@
 <script lang="ts" setup>
 import { Menu as IconMenu } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
+import { onMounted } from "vue";
 
 defineProps({
   isCollapse: Boolean,
 });
 
 const router = useRouter();
+
+onMounted(() => {});
 
 const handleMenuClick = (path: string) => {
   router.push(path);
@@ -46,7 +49,7 @@ const handleMenuClick = (path: string) => {
 .tac {
   background-color: #304156;
   overflow: auto;
-  min-height: 100vh;
+  height: 100vh;
 
   .el-menu-vertical-demo {
     border-right: none !important;

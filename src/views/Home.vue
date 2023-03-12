@@ -31,6 +31,8 @@ const handleCollapse = (collapse: boolean) => {
 <style lang="scss">
 .home-view {
   display: flex;
+  height: 100vh;
+  overflow-x: hidden;
 
   .aside {
     max-width: 226px;

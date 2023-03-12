@@ -6,19 +6,19 @@
         <el-button type="primary" @click="(e) => openEditForm(e)">
           新增项目
         </el-button>
-        <el-button
-          type="primary"
-          @click="refreshProjectList"
-          :icon="RefreshRight"
-        />
+        <el-button type="primary" @click="reset" :icon="RefreshRight" />
       </section>
     </section>
     <section class="form">
-      <el-form class="form-part">
+      <el-form :model="state.form" class="form-part">
         <el-row gutter="24" class="row-form">
           <el-col :span="8">
             <el-form-item label="项目名称">
-              <el-input placeholder="请填写项目名称" />
+              <el-input
+                v-model="state.form.name"
+                clearable
+                placeholder="请填写项目名称"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -27,7 +27,12 @@
               label="项目类型："
               style="width: 100%"
             >
-              <el-select style="width: 100%" placeholder="请选择项目类型">
+              <el-select
+                clearable
+                v-model="state.form.type"
+                style="width: 100%"
+                placeholder="请选择项目类型"
+              >
                 <el-option
                   v-for="item in valueType"
                   :key="item.value"
@@ -39,7 +44,11 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="创建人">
-              <el-input placeholder="请填写创建人" />
+              <el-input
+                clearable
+                v-model="state.form.creator"
+                placeholder="请填写创建人"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -50,12 +59,14 @@
                 type="datetimerange"
                 start-placeholder="请选择创建时间"
                 end-placeholder="请选择创建时间"
+                format="YYYY/MM/DD hh:mm:ss"
+                v-model="state.form.timeRange"
               />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item>
-              <el-button :icon="Search" />
+              <el-button @click="onSearch" :icon="Search" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -96,12 +107,21 @@ import EditForm, {
 } from "../components/Project/EditForm.vue";
 import { handleProjectList, type IProject } from "./type";
 import { RefreshRight, Search } from "@element-plus/icons-vue";
+import { isEmpty } from "lodash";
 
 interface IState {
   editFormVisible: boolean;
   createProjectLoading: boolean;
   tableLoading: boolean;
   projectList: IProject[];
+  form: {
+    name?: string;
+    type?: number;
+    creator?: string;
+    timeRange?: [Date, Date];
+    start_at?: number;
+    end_at?: number;
+  };
 }
 
 const state: IState = reactive({
@@ -109,6 +129,12 @@ const state: IState = reactive({
   createProjectLoading: false,
   tableLoading: false,
   projectList: [],
+  form: {
+    name: undefined,
+    type: undefined,
+    creator: undefined,
+    timeRange: undefined,
+  },
 });
 
 const valueType = [
@@ -116,10 +142,10 @@ const valueType = [
   { label: "测试项目", value: 2 },
 ];
 
-const refreshProjectList = async () => {
+const refreshProjectList = async (params?: GetProjectList.Params) => {
   try {
     state.tableLoading = true;
-    const result = await GetProjectList.request();
+    const result = await GetProjectList.request({ params: { ...params } });
     state.projectList = handleProjectList(result.data.list);
   } catch (error) {
     console.error(error);
@@ -138,6 +164,15 @@ const openEditForm = (e) => {
 
 const closeEditForm = () => {
   state.editFormVisible = false;
+};
+
+const onSearch = () => {
+  const filter = { ...state.form };
+  if (isEmpty(!filter?.timeRange?.[0])) {
+    filter.start_at = filter?.timeRange?.[0]?.getTime();
+    filter.end_at = filter?.timeRange?.[1]?.getTime();
+  }
+  refreshProjectList(filter);
 };
 
 const onOK = async (formValue: IProjectForm) => {
@@ -160,12 +195,20 @@ const onOK = async (formValue: IProjectForm) => {
     state.createProjectLoading = false;
   }
 };
+
+const reset = () => {
+  state.form = {};
+  refreshProjectList();
+};
 </script>
 
 <style lang="scss" scoped>
 .table-container {
   padding: 16px;
   background-color: #f5f5f5;
+  max-height: calc(100vh - 56px);
+  box-sizing: border-box;
+  overflow: auto;
 
   .table-header {
     display: flex;

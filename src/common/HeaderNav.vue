@@ -27,7 +27,7 @@
   height: 56px;
   padding: 0 16px;
   box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
-
+  border-bottom: 1px solid rgb(238, 238, 238);
   .left-part {
     height: 100%;
     display: flex;

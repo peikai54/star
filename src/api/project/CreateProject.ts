@@ -13,7 +13,7 @@ export namespace CreateProject {
     message: string;
   };
 
-  export const request = (options: { body: Body }) => {
+  export const request = (options?: { body: Body }) => {
     const result = instance.post(url, {
       ...options?.body,
       headers: { "content-type": "application/json" },
