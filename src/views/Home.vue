@@ -49,6 +49,7 @@ const handleCollapse = (collapse: boolean) => {
     min-height: 100vh;
     width: calc(100vw - 200px);
     transition: width 0.2s;
+    overflow-y: hidden;
   }
 
   .collapse-container {

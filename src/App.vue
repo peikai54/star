@@ -20,10 +20,13 @@ onMounted(async () => {
     return;
   }
   try {
-    await GetUserInfo.request();
+    const token = localStorage.getItem("token") || "";
+    await GetUserInfo.request({ params: { token } });
   } catch (error) {
     ElMessage.error("登录失败");
-    router.push("/login");
+    setTimeout(() => {
+      router.push("/login");
+    }, 500);
   }
 });
 </script>

@@ -71,8 +71,11 @@ const router = useRouter();
 const onLoginByTourist = async () => {
   try {
     state.loadingTour = true;
-    await Login.request({ body: { user_name: "游客测试账号", password: "" } });
-    await GetUserInfo.request();
+    const result = await Login.request({
+      body: { user_name: "游客测试账号", password: "" },
+    });
+    await GetUserInfo.request({ params: { token: result?.data?.token } });
+    localStorage.setItem("token", result?.data?.token);
     router.push("/project");
   } catch (error) {
   } finally {

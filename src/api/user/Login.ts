@@ -10,12 +10,13 @@ export namespace Login {
 
   export type Response200 = {
     message: string;
+    token: string;
   };
 
   export const request = (options?: { body: Body }) => {
     const result = instance.post(url, {
       ...options?.body,
     });
-    return result as unknown as Promise<Response200>;
+    return result as unknown as Promise<{ data: Response200 }>;
   };
 }
