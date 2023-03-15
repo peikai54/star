@@ -1,13 +1,14 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "vue.d.ts"],
+  "include": ["env.d.ts", "src/**/*", "vue.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["/src/*"],
       "src/*": ["/src/*"]
     },
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "allowJs": true
   },
 
   "references": [

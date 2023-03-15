@@ -6,7 +6,7 @@
           active-text-color="#ffd04b"
           background-color="#304156"
           class="el-menu-vertical-demo"
-          default-active="project"
+          :default-active="state.active"
           text-color="#fff"
           :collapse="isCollapse"
         >
@@ -17,7 +17,7 @@
             <el-icon><icon-menu /></el-icon>
             <span>项目管理</span>
           </el-menu-item>
-          <el-menu-item index="story">
+          <el-menu-item @click="() => handleMenuClick('/story')" index="story">
             <el-icon><icon-menu /></el-icon>
             <span>需求管理</span>
           </el-menu-item>
@@ -30,7 +30,7 @@
 <script lang="ts" setup>
 import { Menu as IconMenu } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
-import { onMounted } from "vue";
+import { onMounted, reactive } from "vue";
 
 defineProps({
   isCollapse: Boolean,
@@ -38,7 +38,12 @@ defineProps({
 
 const router = useRouter();
 
-onMounted(() => {});
+const state = reactive({ active: "project" });
+
+onMounted(() => {
+  const pathArr = location.pathname?.split("/");
+  state.active = pathArr?.[1];
+});
 
 const handleMenuClick = (path: string) => {
   router.push(path);

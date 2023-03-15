@@ -108,6 +108,7 @@ import EditForm, {
 import { handleProjectList, type IProject } from "./type";
 import { RefreshRight, Search } from "@element-plus/icons-vue";
 import { isEmpty } from "lodash";
+import "./list.scss";
 
 interface IState {
   editFormVisible: boolean;
@@ -202,43 +203,4 @@ const reset = () => {
 };
 </script>
 
-<style lang="scss" scoped>
-.table-container {
-  padding: 16px;
-  background-color: #f5f5f5;
-  max-height: calc(100vh - 56px);
-  box-sizing: border-box;
-  overflow: auto;
-
-  .table-header {
-    display: flex;
-    background-color: white;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    padding: 8px;
-    box-shadow: #ddd 0 0 6px;
-  }
-
-  .form {
-    background-color: white;
-    margin-bottom: 16px;
-    box-shadow: #ddd 0 0 6px;
-
-    .el-form-item {
-      align-items: center;
-      height: 100%;
-      margin-bottom: 0 !important;
-    }
-
-    .form-part {
-      min-height: 56px;
-
-      .row-form {
-        min-height: 56px;
-        padding: 0 16px;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>
