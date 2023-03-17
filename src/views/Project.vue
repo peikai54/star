@@ -139,7 +139,7 @@ const state: IState = reactive({
 });
 
 const valueType = [
-  { label: "基础类型", value: 1 },
+  { label: "基本类型", value: 1 },
   { label: "测试项目", value: 2 },
 ];
 
