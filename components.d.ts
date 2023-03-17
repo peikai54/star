@@ -35,7 +35,9 @@ declare module '@vue/runtime-core' {
     ProjectSelect: typeof import('./src/components/Project/ProjectSelect.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StatusSelect: typeof import('./src/components/StatusSelect.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
+    UserSelect: typeof import('./src/components/UserSelect.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
   export interface ComponentCustomProperties {

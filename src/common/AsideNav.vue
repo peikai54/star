@@ -18,7 +18,7 @@
             <span>项目管理</span>
           </el-menu-item>
           <el-menu-item @click="() => handleMenuClick('/story')" index="story">
-            <el-icon><icon-menu /></el-icon>
+            <el-icon><Postcard /></el-icon>
             <span>需求管理</span>
           </el-menu-item>
         </el-menu>
@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Menu as IconMenu } from "@element-plus/icons-vue";
+import { Menu as IconMenu, Postcard } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import { onMounted, reactive } from "vue";
 
@@ -42,7 +42,11 @@ const state = reactive({ active: "project" });
 
 onMounted(() => {
   const pathArr = location.pathname?.split("/");
-  state.active = pathArr?.[1];
+  const tempActive = pathArr?.[1] || "project";
+  if (pathArr?.[1] == "") {
+    router.push(`/${tempActive}`);
+  }
+  state.active = tempActive;
 });
 
 const handleMenuClick = (path: string) => {
