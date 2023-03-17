@@ -47,6 +47,7 @@ import { Login } from "../api/user/Login";
 import { reactive } from "vue";
 import { GetUserInfo } from "../api/user/GetUserInfo";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/store/user";
 
 interface IState {
   form: {
@@ -55,6 +56,8 @@ interface IState {
   };
   loadingTour: boolean;
 }
+
+const userStore = useUserStore();
 
 const state: IState = reactive({
   form: { password: "", user_name: "" },
@@ -74,7 +77,10 @@ const onLoginByTourist = async () => {
     const result = await Login.request({
       body: { user_name: "游客测试账号", password: "" },
     });
-    await GetUserInfo.request({ params: { token: result?.data?.token } });
+    const userResult = await GetUserInfo.request({
+      params: { token: result?.data?.token },
+    });
+    userStore.setUserInfo(userResult?.data?.info);
     localStorage.setItem("token", result?.data?.token);
     router.push("/project");
   } catch (error) {

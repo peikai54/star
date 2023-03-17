@@ -109,6 +109,7 @@ import { handleProjectList, type IProject } from "./type";
 import { RefreshRight, Search } from "@element-plus/icons-vue";
 import { isEmpty } from "lodash";
 import "./list.scss";
+import { useGetUserInfo } from "@/utils/getUserInfo";
 
 interface IState {
   editFormVisible: boolean;
@@ -176,12 +177,14 @@ const onSearch = () => {
   refreshProjectList(filter);
 };
 
+const userInfo = useGetUserInfo();
+
 const onOK = async (formValue: IProjectForm) => {
   try {
     state.createProjectLoading = true;
     await CreateProject.request({
       body: {
-        user_id: 1,
+        user_id: userInfo?.user_id,
         project_name: formValue.projectName,
         project_type: formValue.type,
       },

@@ -21,6 +21,10 @@
             <el-icon><Postcard /></el-icon>
             <span>需求管理</span>
           </el-menu-item>
+          <el-menu-item @click="() => handleMenuClick('/user')" index="user">
+            <el-icon><User /></el-icon>
+            <span>个人中心</span>
+          </el-menu-item>
         </el-menu>
       </el-col>
     </el-row>
@@ -28,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Menu as IconMenu, Postcard } from "@element-plus/icons-vue";
+import { Menu as IconMenu, Postcard, User } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import { onMounted, reactive } from "vue";
 

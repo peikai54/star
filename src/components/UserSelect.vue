@@ -6,6 +6,7 @@
     @change="handleChange"
     filterable
     clearable
+    :multiple="props.isMultiple"
   >
     <el-option
       v-for="item in state.userList"
@@ -25,7 +26,7 @@ interface IState {
   userList: GetUserList.Response200["list"];
 }
 
-const props = defineProps({ value: Number });
+const props = defineProps({ value: Number, isMultiple: Boolean });
 
 const emit = defineEmits<{
   (e: "change", value: number): void;

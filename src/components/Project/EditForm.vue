@@ -27,11 +27,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24" style="margin-bottom: -16px">
-            <el-form-item
-              prop="projectName"
-              label="项目类型："
-              style="width: 100%"
-            >
+            <el-form-item prop="type" label="项目类型：" style="width: 100%">
               <el-select
                 style="width: 100%"
                 v-model="form.type"
@@ -50,7 +46,6 @@
       </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="onCancel">取消</el-button>
           <el-button type="primary" @click="onOK" :loading="loading">
             确认
           </el-button>
@@ -100,7 +95,9 @@ const onOK = () => {
 };
 
 const rules = reactive<FormRules>({
-  projectName: [{ required: true, message: "请填写项目名称", trigger: "blur" }],
+  projectName: [
+    { required: true, message: "请填写项目名称", trigger: ["blur", "change"] },
+  ],
   type: [{ required: true, message: "请选择项目类型", trigger: "blur" }],
 });
 

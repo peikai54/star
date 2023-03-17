@@ -10,6 +10,9 @@
       Star
     </div>
     <div class="right-part">
+      <span style="font-size: 14px; margin-right: 16px; cursor: pointer">{{
+        userInfo?.user_name
+      }}</span>
       <img
         data-v-50bb1d33=""
         src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"
@@ -60,6 +63,7 @@
 </style>
 
 <script setup>
+import { useGetUserInfo } from "@/utils/getUserInfo";
 import { Expand, Fold } from "@element-plus/icons-vue";
 
 defineProps({
@@ -67,6 +71,8 @@ defineProps({
 });
 
 const emit = defineEmits(["handleCollapse"]);
+
+const userInfo = useGetUserInfo();
 
 const expandedMenu = () => emit("handleCollapse", true);
 
