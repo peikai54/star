@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Project from "../views/Project.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +12,7 @@ const router = createRouter({
         {
           path: "project",
           name: "project",
-          component: import("../views/Project.vue"),
+          component: Project,
         },
         {
           path: "story",
@@ -22,6 +23,11 @@ const router = createRouter({
           path: "user",
           name: "user",
           component: () => import("../views/UserInfo.vue"),
+        },
+        {
+          path: "app-template",
+          name: "app-template",
+          component: () => import("../views/AppTemplate.vue"),
         },
       ],
     },

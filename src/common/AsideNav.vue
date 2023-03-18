@@ -21,6 +21,13 @@
             <el-icon><Postcard /></el-icon>
             <span>需求管理</span>
           </el-menu-item>
+          <el-menu-item
+            @click="() => handleMenuClick('/app-template')"
+            index="app-template"
+          >
+            <el-icon><Tools /></el-icon>
+            <span>应用模板</span>
+          </el-menu-item>
           <el-menu-item @click="() => handleMenuClick('/user')" index="user">
             <el-icon><User /></el-icon>
             <span>个人中心</span>
@@ -32,7 +39,12 @@
 </template>
 
 <script lang="ts" setup>
-import { Menu as IconMenu, Postcard, User } from "@element-plus/icons-vue";
+import {
+  Menu as IconMenu,
+  Postcard,
+  User,
+  Tools,
+} from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import { onMounted, reactive } from "vue";
 
