@@ -84,6 +84,30 @@
       <el-table-column prop="type_name" label="项目类型" />
       <el-table-column prop="creator_name" label="创建人" />
       <el-table-column prop="create_at" label="创建时间" />
+      <el-table-column label="操作">
+        <template #default="scope">
+          <el-popconfirm
+            width="240"
+            confirm-button-text="确定"
+            cancel-button-text="取消"
+            :icon="InfoFilled"
+            icon-color="#626AEF"
+            title="确定要删除当前项目吗?"
+            @confirm="(e) => handleDelete(scope.row.project_id)"
+          >
+            <template #reference>
+              <el-button
+                type="danger"
+                text
+                :loading="state.deleteLoadingProject === scope.row.project_id"
+                style="margin-left: -10px"
+              >
+                删除
+              </el-button>
+            </template>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
     </el-table>
 
     <EditForm
@@ -106,10 +130,11 @@ import EditForm, {
   type IProjectForm,
 } from "../components/Project/EditForm.vue";
 import { handleProjectList, type IProject } from "./type";
-import { RefreshRight, Search } from "@element-plus/icons-vue";
+import { RefreshRight, Search, InfoFilled } from "@element-plus/icons-vue";
 import { isEmpty } from "lodash";
 import "./list.scss";
 import { useGetUserInfo } from "@/utils/getUserInfo";
+import { DeleteProject } from "@/api/project/DeleteProject";
 
 interface IState {
   editFormVisible: boolean;
@@ -124,6 +149,7 @@ interface IState {
     start_at?: number;
     end_at?: number;
   };
+  deleteLoadingProject: number;
 }
 
 const state: IState = reactive({
@@ -137,6 +163,7 @@ const state: IState = reactive({
     creator: undefined,
     timeRange: undefined,
   },
+  deleteLoadingProject: NaN,
 });
 
 const valueType = [
@@ -203,6 +230,20 @@ const onOK = async (formValue: IProjectForm) => {
 const reset = () => {
   state.form = {};
   refreshProjectList();
+};
+
+const handleDelete = async (id: number) => {
+  try {
+    state.deleteLoadingProject = id;
+    await DeleteProject.request({ body: { project_id: id } });
+    ElMessage.success("删除成功");
+    onSearch();
+  } catch (error) {
+    console.error(error);
+    ElMessage.error("删除错误");
+  } finally {
+    state.deleteLoadingProject = NaN;
+  }
 };
 </script>
 
